@@ -1,32 +1,34 @@
-#Smart Cafeteria Management System
+# Smart Cafeteria Management System
 
 A simple C++ console-based application designed to help cafeterias manage food menus, customer orders, order status tracking, and daily reports efficiently.
 
-###Features
+### Features
 
-User Functions
-User registration and login
-View available food menu
-Place food orders
-Check order status
-View order history
-Change password
-Admin Functions
-Add, update, and delete food items
-View customer orders
-Mark orders as prepared
-Mark orders as picked up
-Generate daily, weekly, and monthly reports
-Manage cafeteria operations
+• User Functions
+• User registration and login
+• View available food menu
+• Place food orders
+• Check order status
+• View order history
+• Change password
 
-###Technologies Used
+### Admin Functions
 
-C++
-File Handling
-Object-Oriented Programming
-Console-Based Interface
+• Add, update, and delete food items
+• View customer orders
+• Mark orders as prepared
+• Mark orders as picked up
+• Generate daily, weekly, and monthly reports
+• Manage cafeteria operations
 
-###Files Used
+### Technologies Used
+ 
+• C++
+• File Handling
+• Object-Oriented Programming
+• Console-Based Interface
+
+### Files Used
 
 users.txt
 foods.txt
@@ -35,18 +37,18 @@ ordercounter.txt
 dayinfo.txt
 
 
-###How to Run
+### How to Run
 
-Open the project in a C++ IDE (Code::Blocks, Dev-C++, VS Code, etc.)
-Compile the source file
-Run the program
-Use the menu options to access user or admin features
-
-
-###Default Admin Password
-centraladmin1212
+1.Open the project in a C++ IDE (Code::Blocks, Dev-C++, VS Code, etc.)
+2.Compile the source file
+3.Run the program
+4.Use the menu options to access user or admin features
 
 
-##Project Purpose
+### Default Admin Password
+ centraladmin1212
 
-This system was developed to simplify cafeteria order management by allowing customers to place orders digitally while helping administrators manage menus, food preparation, and reports efficiently.
+
+## Project Purpose
+
+✓ This system was developed to simplify cafeteria order management by allowing customers to place orders digitally while helping administrators manage menus, food preparation, and reports efficiently.
