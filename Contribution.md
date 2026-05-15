@@ -3,3 +3,4 @@ Kedir Lemecha  ETS0821/17   (Database integrator and code integrator) <br>
 Kalkidan Asmamaw ETS0805/17 (user ordering system)<br>
 Hana Desalegn ETS0691/17 (Administrator functions like ViewWaitingOrders,MarkPrepared,ViewPreoaredUnpicked,MarkPickedUp)<br>
 Hana Mekonnen ETS0692/17 (Administrator functions like editing orders, modify and delete)<br>
+Hana Berhe ETS0690/17 (Admin Reports & System Control)
