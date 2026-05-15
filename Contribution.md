@@ -1,5 +1,6 @@
-Elisabeth Alemneh ETS0483/17  (Project lead, Main function ,Header,user authentication)<br>
-Kedir Lemecha  ETS0821/17   (Database integrator and code integrator) <br>
-Kalkidan Asmamaw ETS0805/17 (user ordering system)<br>
-Hana Desalegn ETS0691/17 (Administrator functions like ViewWaitingOrders,MarkPrepared,ViewPreoaredUnpicked,MarkPickedUp)<br>
-Hana Mekonnen ETS0692/17 (Administrator functions like editing orders, modify and delete)<br>
+Elisabeth Alemneh ETS0483/17 (Project lead, Main function, Header, user authentication)
+Kedir Lemecha ETS0821/17 (Database integrator and code integrator)
+Kalkidan Asmamaw ETS0805/17 (user ordering system)
+Hana Desalegn ETS0691/17 (Administrator functions like ViewWaitingOrders, MarkPrepared, ViewPreparedUnpicked, MarkPickedUp)
+Hana Mekonnen ETS0692/17 (Administrator functions like editing orders, modify and delete)
+Hana Berhe ETS0690/17 (Admin reports and system control - reports, day change, password management)
