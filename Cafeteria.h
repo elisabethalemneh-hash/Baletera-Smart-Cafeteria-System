@@ -2,85 +2,135 @@
 #define CAFETERIA_H
 
 #include <iostream>
-#include <iomanip>
+#include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <ctime>
-#include <sqlite3.h>
+#include <algorithm>
+#include <cctype>
+#include <iomanip>
+#include <cstring>
 
 using namespace std;
 
-// ========== STRUCTURES ==========
+// ============================================================
+//  STRUCTURES
+// ============================================================
 struct User {
-    int id;
-    string studentId;
-    string name;
-    string phone;
+    char studentID[10];   // ETS + 6 digits (9 chars + null)
+    char name[26];        // max 25 chars + null
+    char phone[11];       // 10 digits + null
     string password;
-    int isAdmin;
-    int totalOrders;
-    double totalSpent;
 };
 
 struct Food {
-    int id;
     string name;
-    double price;
-    int prepTime;
+    float  price;
+    int    preparationTime; // minutes
 };
 
 struct Order {
-    int id;
-    int userId;
-    int foodId;
-    int quantity;
-    string orderTime;
-    string status;  // waiting, prepared, picked_up
-    int day;
-    int week;
+    int    orderNumber;
+    string studentID;
+    string customerName;
+    string customerPhone;
+    string foods[10];
+    int    quantities[10];
+    int    preparationTimes[10];
+    int    foodCount;
+    float  totalPrice;
+    bool   prepared;
+    bool   pickedUp;
+    int    estimatedTime;
+    int    day;
+    int    week;
+    int    month;
 };
 
-// ========== GLOBAL VARIABLES (extern) ==========
-extern sqlite3* db;
+// ============================================================
+//  GLOBAL VARIABLES (extern)
+// ============================================================
 extern int currentDay;
 extern int currentWeek;
+extern int currentMonth;
+extern int orderCounter;
 extern const string CAFETERIA_NAME;
 extern const string DEFAULT_ADMIN_PASS;
-extern User currentUser;
 
-// ========== UTILITY FUNCTION PROTOTYPES ==========
-string toUpperStr(string str);
+// ============================================================
+//  FILE NAMES (extern)
+// ============================================================
+extern const string FILE_USERS;
+extern const string FILE_FOODS;
+extern const string FILE_ORDERS;
+extern const string FILE_ADMINPW;
+extern const string FILE_DAY;
+extern const string FILE_COUNTER;
+
+// ============================================================
+//  UTILITY FUNCTION PROTOTYPES
+// ============================================================
+string toUpperStr(const string& s);
 void pressEnter();
-void printLine(char ch, int length);
+void printLine(char ch = '-', int len = 60);
 void printHeader(const string& title);
-int getInt(const string& prompt);
+int getInt(const string& prompt, int lo, int hi);
 string getLineInput(const string& prompt);
 
-// ========== DATABASE FUNCTIONS ==========
-bool initDatabase();
-void createTables();
+// ============================================================
+//  PERSISTENCE FUNCTIONS (Member 1)
+// ============================================================
+void saveDayInfo();
+void loadDayInfo();
+void saveCounter();
+void loadCounter();
+string loadAdminPass();
+void saveAdminPass(const string& pw);
 
-// ========== VALIDATION & AUTH (Member 2) ==========
+// ============================================================
+//  FILE I/O FUNCTIONS (Member 1)
+// ============================================================
+vector<User> loadUsers();
+void saveUsers(const vector<User>& users);
+vector<Food> loadFoods();
+void saveFoods(const vector<Food>& foods);
+string serializeOrder(const Order& o);
+Order deserializeOrder(const string& line);
+vector<Order> loadOrders();
+void saveOrders(const vector<Order>& orders);
+int getQueueWaitTime();
+int findOrderIndex(vector<Order>& orders, int num);
+
+// ============================================================
+//  VALIDATION FUNCTIONS (Member 2)
+// ============================================================
 bool validateStudentID(const string& id);
 bool validateName(const string& name);
 bool validatePhone(const string& phone);
-bool idExists(const string& studentId);
-int findUser(const string& studentId);
-bool registerUser();
-bool loginUser();
-void userChangePassword();
+bool idExists(const string& id);
+int findUser(const vector<User>& users, const string& id);
 
-// ========== USER ORDER FUNCTIONS (Member 3) ==========
-void viewCafeteriaMenu();
-void orderFood();
-int getQueueWaitTime(int foodId);
-void viewCurrentOrderStatus();
-void viewOrderHistory();
-void viewOrdersMenu();
-void userMenu();
+// ============================================================
+//  USER AUTHENTICATION FUNCTIONS (Member 2)
+// ============================================================
+void registerUser();
+int loginUser(vector<User>& users);
+void userChangePassword(User& user, vector<User>& users, int idx);
+
+// ============================================================
+//  USER ORDERING FUNCTIONS (Member 3)
+// ============================================================
+bool viewCafeteriaMenu();
+void orderFood(const User& user);
+void viewCurrentOrderStatus(const string& studentID);
+void viewOrderHistory(const string& studentID);
+void viewOrdersMenu(const string& studentID);
+void userMenu(int userIdx);
 void userPartMenu();
 
-// ========== ADMIN DATA MANAGEMENT (Member 4) ==========
+// ============================================================
+//  ADMIN FUNCTIONS (Member 4 & 5)
+// ============================================================
 void adminInsertFood();
 void adminUpdateFoodPrice();
 void adminUpdatePrepTime();
@@ -91,14 +141,12 @@ void adminViewWaitingOrders();
 void adminMarkPrepared();
 void adminViewPreparedUnpicked();
 void adminMarkPickedUp();
-
-// ========== ADMIN REPORTS & CONTROL (Member 5) ==========
 void adminViewCustomers();
-void generateReport();
+void generateReport(const string& label, int filterDay, int filterWeek, int filterMonth);
 void adminReports();
 void adminChangeDay();
 void adminChangePassword();
 void adminMenu();
-bool adminLogin();
+void adminLogin();
 
 #endif
