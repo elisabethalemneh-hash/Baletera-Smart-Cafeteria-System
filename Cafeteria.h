@@ -48,7 +48,7 @@ struct Order {
 };
 
 // ============================================================
-//  GLOBAL VARIABLES (extern)
+//  GLOBAL VARIABLES 
 // ============================================================
 extern int currentDay;
 extern int currentWeek;
@@ -58,7 +58,7 @@ extern const string CAFETERIA_NAME;
 extern const string DEFAULT_ADMIN_PASS;
 
 // ============================================================
-//  FILE NAMES (extern)
+//  FILE NAMES 
 // ============================================================
 extern const string FILE_USERS;
 extern const string FILE_FOODS;
@@ -78,7 +78,7 @@ int getInt(const string& prompt, int lo, int hi);
 string getLineInput(const string& prompt);
 
 // ============================================================
-//  PERSISTENCE FUNCTIONS (Member 1)
+//  PERSISTENCE FUNCTIONS 
 // ============================================================
 void saveDayInfo();
 void loadDayInfo();
@@ -88,7 +88,7 @@ string loadAdminPass();
 void saveAdminPass(const string& pw);
 
 // ============================================================
-//  FILE I/O FUNCTIONS (Member 1)
+//  FILE I/O FUNCTIONS 
 // ============================================================
 vector<User> loadUsers();
 void saveUsers(const vector<User>& users);
@@ -102,7 +102,7 @@ int getQueueWaitTime();
 int findOrderIndex(vector<Order>& orders, int num);
 
 // ============================================================
-//  VALIDATION FUNCTIONS (Member 2)
+//  VALIDATION FUNCTIONS
 // ============================================================
 bool validateStudentID(const string& id);
 bool validateName(const string& name);
@@ -111,14 +111,14 @@ bool idExists(const string& id);
 int findUser(const vector<User>& users, const string& id);
 
 // ============================================================
-//  USER AUTHENTICATION FUNCTIONS (Member 2)
+//  USER AUTHENTICATION FUNCTIONS
 // ============================================================
 void registerUser();
 int loginUser(vector<User>& users);
 void userChangePassword(User& user, vector<User>& users, int idx);
 
 // ============================================================
-//  USER ORDERING FUNCTIONS (Member 3)
+//  USER ORDERING FUNCTIONS 
 // ============================================================
 bool viewCafeteriaMenu();
 void orderFood(const User& user);
@@ -129,7 +129,7 @@ void userMenu(int userIdx);
 void userPartMenu();
 
 // ============================================================
-//  ADMIN FUNCTIONS (Member 4 & 5)
+//  ADMIN FUNCTIONS 
 // ============================================================
 void adminInsertFood();
 void adminUpdateFoodPrice();
