@@ -1,4 +1,108 @@
-cout << "\n  Order placed successfully!\n";
+#include "cafeteria.h"
+bool viewCafeteriaMenu() {
+    printHeader("Cafeteria Menu");
+    vector<Food> foods = loadFoods();
+    if (foods.empty()) {
+        cout << "  No foods available at the moment.\n";
+        pressEnter();
+        return false;
+    }
+    cout << "  " << left << setw(4) << "#"
+         << setw(26) << "Food"
+         << setw(14) << "Price"
+         << "Prep Time\n";
+    printLine();
+    for (int i = 0; i < (int)foods.size(); i++) {
+        cout << "  " << setw(3) << (i+1) << ". "
+             << setw(23) << foods[i].name
+             << setw(14) << (to_string((int)foods[i].price) + " birr")
+             << foods[i].preparationTime << " min\n";
+    }
+    printLine();
+    cout << "\n  Do you want to order now?\n";
+    cout << "  1. Yes\n  2. No\n";
+    int ch = getInt("  Choice: ", 1, 2);
+    return (ch == 1);
+}
+void orderFood(const User& user) {
+    vector<Food> foods = loadFoods();
+    if (foods.empty()) {
+        cout << "  No foods available to order.\n";
+        pressEnter();
+        return;
+    }
+    printHeader("Order Food");
+    cout << "  " << left << setw(4) << "#"
+         << setw(26) << "Food"
+         << setw(14) << "Price"
+         << "Prep Time\n";
+    printLine();
+    for (int i = 0; i < (int)foods.size(); i++) {
+        cout << "  " << setw(3) << (i+1) << ". "
+             << setw(23) << foods[i].name
+             << setw(14) << (to_string((int)foods[i].price) + " birr")
+             << foods[i].preparationTime << " min\n";
+    }
+    printLine();
+
+    int numItems = getInt("  How many different food items? (1-10): ", 1, 10);
+
+    Order o;
+    o.foodCount     = 0;
+    o.totalPrice    = 0;
+    o.studentID     = string(user.studentID);
+    o.customerName  = string(user.name);
+    o.customerPhone = string(user.phone);
+    o.prepared      = false;
+    o.pickedUp      = false;
+    o.day           = currentDay;
+    o.week          = currentWeek;
+    o.month         = currentMonth;
+    int ownPrepTime = 0;
+
+    for (int i = 0; i < numItems; i++) {
+        cout << "\n  Item " << (i+1) << ":\n";
+        int choice = getInt("  Select food number: ", 1, (int)foods.size());
+        int qty    = getInt("  Enter quantity: ", 1, 50);
+        o.foods[o.foodCount]            = foods[choice-1].name;
+        o.quantities[o.foodCount]       = qty;
+        o.preparationTimes[o.foodCount] = foods[choice-1].preparationTime;
+        o.totalPrice += foods[choice-1].price * qty;
+        if (foods[choice-1].preparationTime > ownPrepTime)
+            ownPrepTime = foods[choice-1].preparationTime;
+        o.foodCount++;
+    }
+
+    int queueWait   = getQueueWaitTime();
+    o.estimatedTime = queueWait + ownPrepTime;
+
+    printLine();
+    cout << "  ORDER SUMMARY\n";
+    printLine();
+    for (int i = 0; i < o.foodCount; i++)
+        cout << "  - " << o.foods[i] << " x" << o.quantities[i]
+             << "  (" << o.preparationTimes[i] << " min)\n";
+    cout << "  Total Price     : " << fixed << setprecision(2) << o.totalPrice << " birr\n";
+    cout << "  Queue Wait      : " << queueWait << " min\n";
+    cout << "  Estimated Pickup: " << o.estimatedTime << " minutes\n";
+    printLine();
+
+    string pw = getLineInput("  Confirm your password to place order: ");
+    if (pw != string(user.password)) {
+        cout << "  Wrong password. Order cancelled.\n";
+        pressEnter();
+        return;
+    }
+
+    orderCounter++;
+    saveCounter();
+    o.orderNumber = orderCounter;
+
+    vector<Order> orders = loadOrders();
+    orders.push_back(o);
+    saveOrders(orders);
+
+    cout << "\n  Order placed successfully!\n";
     cout << "  Order Number    : #" << o.orderNumber << "\n";
     cout << "  Estimated Pickup: " << o.estimatedTime << " minutes\n";
     pressEnter();
