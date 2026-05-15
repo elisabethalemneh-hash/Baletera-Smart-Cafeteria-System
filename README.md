@@ -68,7 +68,7 @@ dayinfo.txt
 
 ### Default Admin Password
 
- centraladmin1212
+ admin123
 
 
 ## Project Purpose
