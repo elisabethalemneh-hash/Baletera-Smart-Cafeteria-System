@@ -1,4 +1,4 @@
-# Smart Cafeteria Management System
+# Smart Cafeteria Management System (Group 8)
 
 A simple C++ console-based application designed to help cafeterias manage food menus, customer orders, order status tracking, and daily reports efficiently.
 
